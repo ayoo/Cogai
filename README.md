@@ -1,0 +1,1 @@
+This is an experimental prototype for Machine Learning Platform to study Spark, Kafka, Scala and Akka
