@@ -12,7 +12,7 @@ import akka.actor.{ActorSystem, Props}
 import akka.http.scaladsl.model.{HttpResponse, Multipart, StatusCodes}
 
 import scala.concurrent.Future
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Success}
 /**
   * Created by andyyoo on 11/05/16.
   */
@@ -58,9 +58,7 @@ trait DatasetService {
 
   /**
     *
-    * @param filename
-    * @param fileData
-    * @param localCopy
+    * @param request
     * @param system
     * @return
     */
@@ -69,7 +67,6 @@ trait DatasetService {
     val baFuture: Future[Array[Tuple2[String, Future[Array[Byte]]]]] = IOHelper.buildByteArrayAsync(request.fileData)
 
     import ai.cog.serializers.JsonSupport._
-    import spray.json._
 
     for {
       array <- baFuture

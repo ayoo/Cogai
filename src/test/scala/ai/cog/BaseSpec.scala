@@ -13,7 +13,9 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfter, Matchers, WordSpecLike}
 import slick.driver.{JdbcProfile, MySQLDriver}
 
-import scala.util.{Failure, Success}
+import scala.concurrent.Await
+import scala.concurrent.duration._
+
 /**
   * Created by andyyoo on 12/05/16.
   */
@@ -47,15 +49,9 @@ trait BaseDaoSpec extends BaseSpec with ActorSystemModule {
     val db = Database.forConfig("mysql_test")
 
     def reloadSchema(tableName: String): Unit = {
-      db.run(sqlu"TRUNCATE TABLE #$tableName").onComplete {
-        case Success(_) => println(s"Successfully truncated table, " + tableName)
-        case Failure(ex) => throw ex
-      }
+      Await.result(db.run(sqlu"TRUNCATE TABLE #$tableName"), 5.seconds)
     }
   }
-
-  import scala.concurrent.Await
-  import scala.concurrent.duration._
 
   /**
     *  DatasetDAO

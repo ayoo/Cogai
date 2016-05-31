@@ -45,7 +45,4 @@ class DatasetDAOSpec extends BaseDaoSpec {
     }
   }
 
-  after {
-    //datasetServiceDao.db.close()
-  }
 }
